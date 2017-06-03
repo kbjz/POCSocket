@@ -3,7 +3,7 @@
 //  POCOrpheau
 //
 //  Created by Kevin Bernajuzan on 03/06/2017.
-//  Copyright © 2017 Orpheau. All rights reserved.
+//  Copyright © 2017 Kevin Bernajuzan. All rights reserved.
 //
 
 import UIKit
@@ -12,8 +12,10 @@ import SwiftSocket
 enum POCErrors : String {
     case emptyField = "Erreur : Un champs est vide"
     case requestNil = "Erreur : Request est a nil"
-    case clientNil = "Erreur Socket : Client  non initialise - connectez vous avec une adresse ip et un port"
+    case clientNil = "Erreur Socket : Client non initialise - connectez vous avec une adresse ip et un port"
+    case vinyleFace = "Erreur : la Face du vinyle doit etre A ou B"
 }
+
 
 struct ConnectionStrings {
     static var host = "127.0.0.1"
@@ -31,6 +33,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var disdplayView: UITextView!
     var client: TCPClient?
     var request : String? = nil
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.client?.close()
+        self.client = nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,11 +63,25 @@ class ViewController: UIViewController {
         self.sendButton.layer.cornerRadius = 6.0
         self.disdplayView.layer.cornerRadius = 6.0
         self.sendButton.layer.borderWidth = 1.0
-        self.ipTf.text = ConnectionStrings.host
-        self.portTf.text = "8080"
+        
+        self.cmdTf.delegate = self
+        self.ipTf.delegate = self
+        self.portTf.delegate = self
+        self.vinyleFace.delegate = self
+        self.vinyleID.delegate = self
+        //self.ipTf.text = ConnectionStrings.host
+        //self.portTf.text = "8080"
     }
     
     @IBAction func connectTapped(_ sender: Any) {
+        if (self.ipTf.text == nil) || self.ipTf.text == "" {
+            self.disdplayView.text = POCErrors.emptyField.rawValue
+            return
+        }
+        if (self.portTf.text == nil) || self.portTf.text == "" {
+            self.disdplayView.text = POCErrors.emptyField.rawValue
+            return
+        }
         guard let ip = self.ipTf.text else {return}
         guard let p = self.portTf.text else {return}
         
@@ -121,12 +147,17 @@ class ViewController: UIViewController {
             self.disdplayView.text = POCErrors.emptyField.rawValue
             return
         }
+        if (self.vinyleFace.text != "A") && self.vinyleFace.text != "B" {
+            self.disdplayView.text = POCErrors.vinyleFace.rawValue
+            return
+        }
         if (self.vinyleID.text == nil) || self.vinyleID.text == "" {
             self.disdplayView.text = POCErrors.emptyField.rawValue
             return
         }
+        
         if let c = self.client {
-            self.request = "\(self.cmdTf.text ?? "")\(self.vinyleID.text ?? "")\(self.vinyleFace.text ?? "")"
+            self.request = "\(self.cmdTf.text ?? "")\(self.vinyleFace.text ?? "")\(self.vinyleID.text ?? "")"
             print(self.request ?? "")
             if let str = self.request {
                 let resp = self.sendRequestData(string: str , using: c)
@@ -139,4 +170,9 @@ class ViewController: UIViewController {
         }
     }
 }
-    
+
+extension ViewController : UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        textField.resignFirstResponder()
+    }
+}
