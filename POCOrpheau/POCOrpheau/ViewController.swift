@@ -23,6 +23,7 @@ struct ConnectionStrings {
 }
 
 class ViewController: UIViewController {
+    
     @IBOutlet weak var vinyleID: UITextField!
     @IBOutlet weak var vinyleFace: UITextField!
     @IBOutlet weak var connectButton: UIButton!
@@ -44,6 +45,8 @@ class ViewController: UIViewController {
         self.client = nil
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialize()
@@ -64,13 +67,14 @@ class ViewController: UIViewController {
         self.disdplayView.layer.cornerRadius = 6.0
         self.sendButton.layer.borderWidth = 1.0
         
+        
         self.cmdTf.delegate = self
         self.ipTf.delegate = self
         self.portTf.delegate = self
         self.vinyleFace.delegate = self
         self.vinyleID.delegate = self
-        //self.ipTf.text = ConnectionStrings.host
-        //self.portTf.text = "8080"
+        self.ipTf.text = ConnectionStrings.host
+        self.portTf.text = "8080"
     }
     
     @IBAction func connectTapped(_ sender: Any) {
@@ -93,7 +97,7 @@ class ViewController: UIViewController {
             if let r = (String(bytes: bytes , encoding: .utf8)) {
                 self.disdplayView.text = "Server says : \(r) - \(bytes)  )"
             }
-      //      self.disdplayView.text = "Client : success Connection \(c.address) \(c.port)"
+            self.disdplayView.text = "Client : success Connection \(c.address) \(c.port)"
         case .failure(let e):
             self.disdplayView.text = "\(e.localizedDescription)"
         }
@@ -112,7 +116,8 @@ class ViewController: UIViewController {
         let buf = [UInt8](string.utf8)
         switch client.send(data:buf) {
         case .success:
-            self.disdplayView.text = "Client send : \(string) \(buf)"
+            let s = "Client sent : \(string) \(buf)"
+            self.disdplayView.text = s
             print("client sending \(string)")
             return readResponse(from: client)
         case .failure(let error):
@@ -123,20 +128,20 @@ class ViewController: UIViewController {
     }
     
     
-   /* private func sendRequest(string: String, using client: TCPClient) -> String? {
-        switch client.send(string: string) {
-        case .success:
-            let buf = [UInt8](string.utf8)
-            self.disdplayView.text = "Client send : \(string) \(buf)"
-            print("client sending \(string)")
-            return readResponse(from: client)
-        case .failure(let error):
-            print(error)
-            self.disdplayView.text = "\(error)"
-            return nil
-        }
-    }
- */
+    /* private func sendRequest(string: String, using client: TCPClient) -> String? {
+     switch client.send(string: string) {
+     case .success:
+     let buf = [UInt8](string.utf8)
+     self.disdplayView.text = "Client send : \(string) \(buf)"
+     print("client sending \(string)")
+     return readResponse(from: client)
+     case .failure(let error):
+     print(error)
+     self.disdplayView.text = "\(error)"
+     return nil
+     }
+     }
+     */
     //[49, 84, 69, 83, 84, 73, 68, 65]
     @IBAction func sendTapped(_ sender: Any) {
         if (self.cmdTf.text == nil) || self.cmdTf.text == "" {
@@ -147,7 +152,7 @@ class ViewController: UIViewController {
             self.disdplayView.text = POCErrors.emptyField.rawValue
             return
         }
-        if (self.vinyleFace.text != "A") && self.vinyleFace.text != "B" {
+        if (self.vinyleFace.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "A") && self.vinyleFace.text?.trimmingCharacters(in: .whitespacesAndNewlines) != "B" {
             self.disdplayView.text = POCErrors.vinyleFace.rawValue
             return
         }
@@ -157,12 +162,12 @@ class ViewController: UIViewController {
         }
         
         if let c = self.client {
-            self.request = "\(self.cmdTf.text ?? "")\(self.vinyleFace.text ?? "")\(self.vinyleID.text ?? "")"
+            self.request = "\(self.cmdTf.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")\(self.vinyleFace.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")\(self.vinyleID.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")"
             print(self.request ?? "")
             if let str = self.request {
                 let resp = self.sendRequestData(string: str , using: c)
                 if let str = String(bytes: resp, encoding: .utf8) {
-                    self.disdplayView.text = "\(self.disdplayView.text)\nServer: I received :\(str) \(resp)"
+                    self.disdplayView.text.append("\n\nServer: I received :\(str) \(resp)")
                 }
             }
         } else {
