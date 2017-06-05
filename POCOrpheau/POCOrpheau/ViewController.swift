@@ -35,6 +35,11 @@ class ViewController: UIViewController {
     var client: TCPClient?
     var request : String? = nil
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.barTintColor = UIColor.darkGray
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,NSFontAttributeName:UIFont(name:"HelveticaNeue-Light",size:25) as Any]
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -58,23 +63,28 @@ class ViewController: UIViewController {
         self.cmdTf.layer.borderColor=UIColor.lightGray.cgColor
         self.ipTf.layer.borderColor=UIColor.lightGray.cgColor
         self.portTf.layer.borderColor=UIColor.lightGray.cgColor
-        self.disdplayView.layer.borderColor=UIColor.lightGray.cgColor
         self.connectButton.layer.borderWidth = 1.0
-        self.connectButton.layer.borderColor = UIColor.lightGray.cgColor
-        self.sendButton.layer.borderColor = UIColor.lightGray.cgColor
-        self.connectButton.layer.cornerRadius = 6.0
-        self.sendButton.layer.cornerRadius = 6.0
-        self.disdplayView.layer.cornerRadius = 6.0
+        self.connectButton.layer.borderColor = UIColor.darkGray.cgColor
+        self.sendButton.layer.borderColor = UIColor.darkGray.cgColor
+        self.disdplayView.layer.borderColor = UIColor.darkGray.cgColor
+        self.connectButton.layer.cornerRadius = 4.0
+        self.sendButton.layer.cornerRadius = 4.0
+        self.disdplayView.layer.cornerRadius = 4.0
         self.sendButton.layer.borderWidth = 1.0
+        self.connectButton.layer.backgroundColor = UIColor.darkGray.cgColor
+        self.sendButton.layer.backgroundColor = UIColor.darkGray.cgColor
+        self.connectButton.tintColor = UIColor.white
+        self.sendButton.tintColor = UIColor.white
         
         
-        self.cmdTf.delegate = self
+     self.cmdTf.delegate = self
         self.ipTf.delegate = self
         self.portTf.delegate = self
         self.vinyleFace.delegate = self
         self.vinyleID.delegate = self
+          /*
         self.ipTf.text = ConnectionStrings.host
-        self.portTf.text = "8080"
+        self.portTf.text = "8080"*/
     }
     
     @IBAction func connectTapped(_ sender: Any) {
@@ -177,7 +187,8 @@ class ViewController: UIViewController {
 }
 
 extension ViewController : UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()
+        return true
     }
 }
