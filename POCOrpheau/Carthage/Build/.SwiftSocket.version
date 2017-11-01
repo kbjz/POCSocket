@@ -1,0 +1,9 @@
+{
+  "commitish" : "2.0.2",
+  "iOS" : [
+    {
+      "hash" : "d77eea642adb4ff53b09597e5b0fb8a5e7b7241d7d1b5fad48db8fc6fc7a729e",
+      "name" : "SwiftSocket"
+    }
+  ]
+}

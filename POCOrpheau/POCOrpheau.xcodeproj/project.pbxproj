@@ -16,6 +16,7 @@
 		0A44780F1EE2A1EB00C37FEB /* POCOrpheauUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A44780E1EE2A1EB00C37FEB /* POCOrpheauUITests.swift */; };
 		0A44781D1EE2A31B00C37FEB /* SwiftSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A44781C1EE2A31B00C37FEB /* SwiftSocket.framework */; };
 		0A44781E1EE2A31B00C37FEB /* SwiftSocket.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A44781C1EE2A31B00C37FEB /* SwiftSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0A5911EB1EEF21290061EFC5 /* PKHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A5911EA1EEF21290061EFC5 /* PKHUD.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		0A44780E1EE2A1EB00C37FEB /* POCOrpheauUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POCOrpheauUITests.swift; sourceTree = "<group>"; };
 		0A4478101EE2A1EB00C37FEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A44781C1EE2A31B00C37FEB /* SwiftSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftSocket.framework; path = Carthage/Build/iOS/SwiftSocket.framework; sourceTree = "<group>"; };
+		0A5911EA1EEF21290061EFC5 /* PKHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PKHUD.framework; path = Carthage/Build/iOS/PKHUD.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A44781D1EE2A31B00C37FEB /* SwiftSocket.framework in Frameworks */,
+				0A5911EB1EEF21290061EFC5 /* PKHUD.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +103,7 @@
 				0A4478021EE2A1EB00C37FEB /* POCOrpheauTests */,
 				0A44780D1EE2A1EB00C37FEB /* POCOrpheauUITests */,
 				0A4477EC1EE2A1EB00C37FEB /* Products */,
+				0A5911E91EEF21280061EFC5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,6 +146,14 @@
 				0A4478101EE2A1EB00C37FEB /* Info.plist */,
 			);
 			path = POCOrpheauUITests;
+			sourceTree = "<group>";
+		};
+		0A5911E91EEF21280061EFC5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A5911EA1EEF21290061EFC5 /* PKHUD.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,7 +226,7 @@
 				TargetAttributes = {
 					0A4477EA1EE2A1EB00C37FEB = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = 95X9ZVYAM9;
+						DevelopmentTeam = 3474DKJGRU;
 						ProvisioningStyle = Automatic;
 					};
 					0A4477FE1EE2A1EB00C37FEB = {
@@ -286,6 +298,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftSocket.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PKHUD.framework",
 			);
 			outputPaths = (
 			);
@@ -455,16 +468,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 95X9ZVYAM9;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3474DKJGRU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = POCOrpheau/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Orpheau.POCOrpheau;
+				PRODUCT_BUNDLE_IDENTIFIER = Orpheau.POCOrpheauSocket;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -472,16 +490,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 95X9ZVYAM9;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3474DKJGRU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = POCOrpheau/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Orpheau.POCOrpheau;
+				PRODUCT_BUNDLE_IDENTIFIER = Orpheau.POCOrpheauSocket;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -562,6 +585,7 @@
 				0A4478151EE2A1EB00C37FEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A4478161EE2A1EB00C37FEB /* Build configuration list for PBXNativeTarget "POCOrpheauTests" */ = {
 			isa = XCConfigurationList;
@@ -570,6 +594,7 @@
 				0A4478181EE2A1EB00C37FEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A4478191EE2A1EB00C37FEB /* Build configuration list for PBXNativeTarget "POCOrpheauUITests" */ = {
 			isa = XCConfigurationList;
@@ -578,6 +603,7 @@
 				0A44781B1EE2A1EB00C37FEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

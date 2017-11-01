@@ -1,1 +1,2 @@
 github "swiftsocket/SwiftSocket"
+github "pkluz/PKHUD" ~> 4.0

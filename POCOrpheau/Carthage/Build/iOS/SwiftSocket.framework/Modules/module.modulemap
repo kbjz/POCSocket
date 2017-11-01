@@ -7,4 +7,5 @@ framework module SwiftSocket {
 
 module SwiftSocket.Swift {
     header "SwiftSocket-Swift.h"
+    requires objc
 }
